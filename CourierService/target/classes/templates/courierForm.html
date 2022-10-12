@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Registration</title>
+
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+</head>
+<body>
+
+	<!-- create navigation bar ( header) -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="/">Wizards Courier Service</a>
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item active"><a class="nav-link" href="/getCourierForm">Courier New Items
+					<span class="sr-only">(current)</span>
+			</a></li>
+			<li class="nav-item active"><a class="nav-link" href="/details">Track Shipments
+					<span class="sr-only">(current)</span>
+			</a></li>
+			<li class="nav-item active"><a class="nav-link" href="/charges">Plans
+					<span class="sr-only">(current)</span>
+			</a></li>
+			<li class="nav-item active" sec:authorize="isAuthenticated()"><a
+				class="nav-link" th:href="@{/logout}">Logout <span
+					class="sr-only">(current)</span></a></li>
+
+		</ul>
+		<form class="form-inline my-2 my-lg-0" th:each="user:${user}">
+			<span th:text="${user.firstName}"></span>
+			<li style="list-style: none"><span
+				class="material-symbols-outlined"> account_circle </span></li>
+		</form>
+		</ul>
+	</nav>
+	<br>
+	<br>
+	<!-- Create HTML registration form -->
+	<div class="container" style="padding:auto;margin:auto">
+		<div class="row">
+			<div style="margin-left:25%;width:40%;">
+
+				<!-- success message -->
+				<div th:if="${param.success}">
+					<div class="alert alert-info">You've successfully registered
+						to our awesome app!</div>
+				</div>
+				<div th:if="${param.startDate}">
+					<div class="alert alert-info">Pickup Date is invalid</div>
+				</div>
+				<div th:if="${param.weight}">
+					<div class="alert alert-info">Weight cannot be less than zero</div>
+				</div>
+				<div th:if="${param.ld}">
+					<div class="alert alert-info">Distance can't be less than zero</div>
+				</div>
+				<div th:if="${param.md}">
+					<div class="alert alert-info">Distance can't be more than 100</div>
+				</div>
+
+				
+
+				<form th:action="@{/getCourierForm}" method="post"th:object="${courier}">
+					<div class="form-group">
+						<label class="control-label" for="Name"> Item Name </label>
+						<input id="Name" class="form-control" th:field="*{name}"
+							required autofocus="autofocus" />
+					</div>
+
+					<div class="form-group">
+						<label class="control-label" for="startDate">Pickup Date </label> <input
+							id="startDate" class="form-control" th:field="*{startDate}"
+							required autofocus="autofocus" />
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="weight"> Weight </label> <input
+							id="weight" class="form-control" th:field="*{weight}" required
+							autofocus="autofocus" />
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="pickup"> Pickup Location </label> <input
+							id="pickup" class="form-control" th:field="*{pickup}" required
+							autofocus="autofocus" />
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="delivery"> Delivery Location </label> <input
+							id="delivery" class="form-control" th:field="*{delivery}" required
+							autofocus="autofocus" />
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="distance"> Distance </label> <input
+							id="distance" class="form-control" th:field="*{distance}" required
+							autofocus="autofocus" />
+					</div>
+					
+
+					<div class="form-group">
+						<button type="submit" class="btn btn-success">Create Courier Order</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
